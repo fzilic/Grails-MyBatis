@@ -15,8 +15,8 @@ grails.project.dependency.resolution = {
   }
 
   dependencies {
-    compile 'org.mybatis:mybatis:3.0.6'
-    compile('org.mybatis:mybatis-spring:1.0.2') { transitive = false }
+    compile 'org.mybatis:mybatis:3.1.1'
+    compile('org.mybatis:mybatis-spring:1.1.1') { transitive = false }
   }
 
   plugins {

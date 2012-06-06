@@ -18,8 +18,8 @@ import org.codehaus.groovy.grails.commons.GrailsClassUtils
  *
  * Grails like use - convention over configuration
  *
- * Convetions (configuration options as static fields in object being persisted):
- *  - enable interceptor for persited object (default: false)
+ * Conventions (configuration options as static fields in object being persisted):
+ *  - enable interceptor for persisted object (default: false)
  *   - def static useOptimisticLocking = true
  *  - identity property: 'id'
  *   - configurable: def static idProperty = 'identity'
@@ -62,7 +62,14 @@ class OptimisticLockingInterceptor implements Interceptor {
     def currentVersion = executor.query(versionQueryStatement, object."$idProperty", RowBounds.DEFAULT, null)
 
     if (currentVersion == null || currentVersion.size() != 1) {
-      throw new OptimisticLockingException("Record deleted by another user")
+      throw new RecordDeletedException(
+          """Record deleted by another user.
+            Class: ${object.class}
+            Object id: ${object."$idProperty"}
+            Mapper namespace: $namespace
+            Statement: $mappedStatement.id
+            Version query: $versionQueryStatement.id""".stripIndent() as String
+      )
     }
     else {
       currentVersion = currentVersion[0]
@@ -74,14 +81,17 @@ class OptimisticLockingInterceptor implements Interceptor {
   @Override
   public Object intercept(Invocation invocation) throws Throwable {
     // As per annotation first argument is statement, second argument is target object
-    MappedStatement mappedStatement = invocation.args[0]
+    MappedStatement mappedStatement = invocation.args[0] as MappedStatement
     def object = invocation.args[1]
 
-    if (GrailsClassUtils.getStaticFieldValue(object.class, "useOptimisticLocking") ?: false) {
-      Executor executor = invocation.target
+    def optimisticLockingEnabled = GrailsClassUtils.getStaticFieldValue(object.getClass(), "useOptimisticLocking") ?: false
+
+    if (optimisticLockingEnabled) {
+      Executor executor = invocation.target as Executor
 
       // Get object version property name
       def versionProperty = GrailsClassUtils.getStaticFieldValue(object.class, "versionProperty") ?: 'version'
+      def idProperty = GrailsClassUtils.getStaticFieldValue(object.class, "idProperty") ?: "id"
 
       switch (mappedStatement.sqlCommandType) {
 
@@ -92,7 +102,15 @@ class OptimisticLockingInterceptor implements Interceptor {
           def objectVersion = object."$versionProperty"
 
           if (objectVersion != databaseVersion) {
-            throw new OptimisticLockingException("Record alterd by another user")
+            throw new RecordAlteredException(
+                """Record alterd by another user.
+                   Class: ${object.class}
+                   Object id: ${object."$idProperty"}
+                   Object version: ${object."$versionProperty"}
+                   Database version: $databaseVersion
+                   Statement: $mappedStatement.id
+                """.stripIndent() as String
+            )
           }
 
           object."$versionProperty" = objectVersion + 1
@@ -104,7 +122,15 @@ class OptimisticLockingInterceptor implements Interceptor {
           def objectVersion = object."$versionProperty"
 
           if (objectVersion != databaseVersion) {
-            throw new OptimisticLockingException("Record alterd by another user")
+            throw new OptimisticLockingException(
+                """Record alterd by another user.
+                   Class: ${object.class}      0
+                   Object id: ${object."$idProperty"}
+                   Object version: ${object."$versionProperty"}
+                   Database version: $databaseVersion
+                   Statement: $mappedStatement.id
+                """.stripIndent() as String
+            )
           }
 
           break
