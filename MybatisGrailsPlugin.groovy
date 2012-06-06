@@ -1,5 +1,6 @@
 
 import org.apache.commons.logging.LogFactory
+import org.apache.ibatis.mapping.DefaultDatabaseIdProvider
 import org.codehaus.groovy.grails.commons.GrailsClass
 import org.codehaus.groovy.grails.commons.GrailsClassUtils
 import org.grails.plugins.mybatis.MappingSupport
@@ -118,7 +119,20 @@ Included support for multiple datasources, and mapping specific gateways to a da
           artefactClass.newInstance()
         }
 
-        plugins = [new OptimisticLockingInterceptor()]
+        def enabledPlugins = []
+
+        if (application.config.mybatis.optimisticLocking ?: true) {
+          enabledPlugins << new OptimisticLockingInterceptor()
+        }
+
+        plugins = enabledPlugins
+
+        if (application.config.mybatis.multivendor.enabled ?: false) {
+          def provider = new DefaultDatabaseIdProvider()
+          provider.properties = application.config.mybatis.multivendor.mapping
+
+          databaseIdProvider = provider
+        }
       }
 
       "sqlSessionTemplate_$dataSourceName"(org.mybatis.spring.SqlSessionTemplate, ref("sqlSessionFactoryBean_$dataSourceName"))
