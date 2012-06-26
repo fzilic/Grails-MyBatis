@@ -4,7 +4,6 @@ import java.sql.CallableStatement
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 import java.sql.SQLException
-import java.util.List
 
 import org.apache.ibatis.type.BaseTypeHandler
 import org.apache.ibatis.type.JdbcType
@@ -27,19 +26,19 @@ abstract class AbstractEnumTypeHandler<T extends Enum> extends BaseTypeHandler<T
   @Override
   public T getNullableResult(CallableStatement statement, int columnIndex) throws SQLException {
     def source = statement.getObject(columnIndex)
-    return enumFromProperty(source)
+    return enumFromProperty(source) as T
   }
 
   @Override
   public T getNullableResult(ResultSet resultSet, int columnIndex) throws SQLException {
     def source = resultSet.getObject(columnIndex)
-    return enumFromProperty(source)
+    return enumFromProperty(source) as T
   }
 
   @Override
   public T getNullableResult(ResultSet resultSet, String columnName) throws SQLException {
     def source = resultSet.getObject(columnName)
-    return enumFromProperty(source)
+    return enumFromProperty(source) as T
   }
 
   @Override
