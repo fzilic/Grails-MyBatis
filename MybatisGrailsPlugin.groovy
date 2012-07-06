@@ -30,7 +30,7 @@ Included support for multiple datasources, and mapping specific gateways to a da
 '''
 
   // URL to the plugin's documentation
-  def documentation = "http://grails.org/plugin/grails-mybatis"
+  def documentation = "http://grails.org/plugin/mybatis"
 
   // Extra (optional) plugin metadata
 
