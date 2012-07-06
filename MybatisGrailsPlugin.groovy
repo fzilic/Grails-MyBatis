@@ -18,7 +18,7 @@ class MybatisGrailsPlugin {
     "src/gateways/**/*"
   ]
 
-  def title = "Grails Mybatis Plugin" // Headline display name of the plugin
+  def title = "Grails Mybatis Plugin"
   def author = "Franjo Žilić"
   def authorEmail = "fzilic@croz.net"
   def description = '''\
@@ -41,13 +41,15 @@ Included support for multiple datasources, and mapping specific gateways to a da
   def organization = [ name: "CROZ d.o.o.", url: "http://www.croz.net/" ]
 
   // Any additional developers beyond the author specified above.
-  //    def developers = [ [ name: "Joe Bloggs", email: "joe@bloggs.net" ]]
+  def developers = [
+    [name: "Damir Murat", email: "dmurat@croz.net" ]
+  ]
 
   // Location of the plugin's issue tracker.
-  //    def issueManagement = [ system: "JIRA", url: "http://jira.grails.org/browse/GPMYPLUGIN" ]
+  def issueManagement = [ system: "github", url: "https://github.com/fzilic/Grails-MyBatis/issues" ]
 
   // Online location of the plugin's browseable source code.
-  //    def scm = [ url: "http://svn.grails-plugins.codehaus.org/browse/grails-plugins/" ]
+  def scm = [ url: "https://github.com/fzilic/Grails-MyBatis" ]
 
   def artefacts = [
     GatewayArtefactHandler,
@@ -102,9 +104,7 @@ Included support for multiple datasources, and mapping specific gateways to a da
         dataSourceName ==  GrailsClassUtils.getStaticPropertyValue(artefact.clazz, 'dataSourceName') ?: dataSourceName
       }
 
-      typeHandlerTypes.each {
-        log.debug "Found $TypeHandlerArtefactHandler.TYPE $it.clazz"
-      }
+      typeHandlerTypes.each { log.debug "Found $TypeHandlerArtefactHandler.TYPE $it.clazz" }
 
       "sqlSessionFactoryBean_$dataSourceName"(org.mybatis.spring.SqlSessionFactoryBean){
         dataSource = ref(dataSourceName)
