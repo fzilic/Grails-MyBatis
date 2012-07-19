@@ -7,3 +7,6 @@ target-eclipse
 web-app
 stacktrace.log
 .svn
+.idea
+*.zip
+*.iml

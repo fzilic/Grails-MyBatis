@@ -1,0 +1,57 @@
+h1. Installation
+Add plugin dependency to BuildConfig.groovy
+{code}
+compile \":mybatis:0.0.1\"
+{code}
+
+h1. UnInstall
+Remove plugin dependency from BuildConfig.groovy and remove directories grails-app/gateways and grails-app/typeHandlers
+
+h2. Workspace configuration
+If you are using SpringSource Tool Suite or IntelliJ Idea as your IDE you should add grails-app/gateways and grails-app/typeHandlers to your source path for class resolution.
+
+h1. Configuration
+None of configuration options is required for starting application with this plugin, but you should modify them to suite your own application
+{table}
+Option|Description
+mybatis.dataSourceNames|List of datasource names used for MyBatis
+mybatis.optimisticLocking|Enable OptimisticLockingInterceptor globally
+mybatis.multivendor.enabled|Enable support for multiple database engines
+mybatis.multivendor.mapping|Map multiple database engines to specific MyBatis database ids
+{table}
+
+h2. DataSource configuration
+To support multiple datasources you have to configure which ones are going to be used by MyBatis plugin.
+
+By default plugin uses only default datasource and each gateway artefact is registered to default datasource. If you wish to use more then one datasource add their names to this list.
+
+{code}
+mybatis.dataSourceNames = \['dataSource'\]
+{code}
+
+h2. Optimistic locking configuration
+Optimistic locking is enabled by default on all datasources but no object will be versioned unless they are configured with a static field. To change optimistic locking functionality add this to your configuration.
+
+{code}
+mybatis.optimisticLocking = false
+{code}
+
+h2. Multivendor database support
+If you wish to support more then one database vendor you have to enable support in plugin configuration and map different database names to a specific databaseId key. For more information about multivendor support in MyBatis consult [MyBatis documentation|http://www.mybatis.org/core/configuration.html#databaseIdProvider]. Sample configuration and use is provided in this documentation.
+
+{code}
+mybatis.multivendor.enabled = true
+{code}
+
+{note}
+If you choose to implement multivendor support you have to map database names to distinct ids. This is a sample configuration which provides mapping for couple of database names
+{code}
+mybatis.multivendor.mapping = [
+    'Microsoft SQL Server': 'mssql',
+    'H2': 'h2',
+    'Informix Dynamic Server': 'informix',
+    'DB2/LINUXX8664': 'db2',
+    'DB2/400 SQL': 'db2'
+]
+{code}
+{note}

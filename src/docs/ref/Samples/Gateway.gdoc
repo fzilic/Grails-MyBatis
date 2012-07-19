@@ -1,0 +1,24 @@
+h1. Gateway artefact class sample with all possible config options.
+
+{note}
+You can omit any option and plugin will assume defaults.
+{note}
+
+{code}
+package org.grails.mybatis.example
+class SampleGateway {
+  /**
+   * dataSource where to execute queries from this gateway
+   * Default: 'dataSource'
+   */
+  def static dataSourceName = 'dataSource'
+
+  /**
+   * Force queries to behave as list selects instead of single result selects.
+   * By convention any query that ends with 'List' will be handled this way.
+   * Default: []
+   */
+  def static forceAsListOps = ['selectSomething']
+
+}
+{code}

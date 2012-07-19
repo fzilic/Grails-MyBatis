@@ -1,0 +1,96 @@
+h1. Writing custom MyBatis TypeHandlers
+
+h2. What are TypeHandlers
+Type handlers are used for data transformation. For example, you are connecting to a legacy database that stores list of data in a single VARCHAR field, and each item is enclosed with brackets. You have to extract that data, and you can do it with a custom type handler.
+
+h2. Writing a TypeHandler
+TypeHandlers are artefact classes which should be placed in grails-app/typeHandlers and end with "TypeHandler"
+
+{code}
+package org.grails.mybatis.example
+
+import java.sql.CallableStatement
+import java.sql.PreparedStatement
+import java.sql.ResultSet
+import java.sql.SQLException
+
+import org.apache.ibatis.type.BaseTypeHandler
+import org.apache.ibatis.type.JdbcType
+import org.apache.ibatis.type.MappedJdbcTypes
+import org.apache.ibatis.type.MappedTypes
+
+@MappedJdbcTypes(JdbcType.VARCHAR)
+@MappedTypes([List])
+class ExampleTypeHandler extends BaseTypeHandler<List<String>>{
+  def static dataSourceName = 'dataSource'
+
+  @Override
+  public void setNonNullParameter(PreparedStatement statement, int index, List<String> parameter, JdbcType jdbcType) throws SQLException {
+    def builder = "" as StringBuilder
+
+    parameter.each {
+      builder += "[$it]"
+    }
+
+    statement.setString(index, builder.toString())
+  }
+
+  List<String> decodeValue(String value) {
+    def matcher = value =~ /\[(.*?)\]/
+    def results = []
+
+    matcher.each {
+      results << it[1]
+    }
+
+    return results
+  }
+
+  @Override
+  public List<String> getNullableResult(ResultSet resultSet, String columnName) throws SQLException {
+    def encoded = resultSet.getString(columnName)
+    return decodeValue(encoded)
+  }
+
+  @Override
+  public List<String> getNullableResult(ResultSet resultSet, int columnIndex) {
+    def encoded = resultSet.getString(columnIndex)
+    return decodeValue(encoded)
+  }
+
+  @Override
+  public List<String> getNullableResult(CallableStatement statement, int columnIndex) throws SQLException {
+    def encoded = statement.getString(columnIndex)
+    return decodeValue(encoded)
+  }
+}
+{code}
+
+You have to register that type handler to a specific MyBatis result using typeHanlder attribute in mapper file.
+
+h2. Custom Enum type handlers
+From time to time old databases store some enumerated information in a specific way (single character). If you need to map such values to your enums it can be done by extending AbstractEnumTypeHandler class provided in this plugin
+
+{code}
+package org.grails.plugins.mybatis.enums
+
+enum SampleEnum {
+  VALUE_ONE('O'), VALUE_TWO('T')
+
+  String dbCode
+
+  SampleEnum(dbCode){
+    this.dbCode = dbCode
+  }
+}
+{code}
+
+{code}
+package org.grails.plugins.mybatis.enums
+
+class SampleEnumTypeHandler extends AbstractEnumTypeHandler<SampleEnum> {
+  SampleEnumTypeHandler() {
+    super(SampleEnum, "dbCode")
+  }
+}
+{code}

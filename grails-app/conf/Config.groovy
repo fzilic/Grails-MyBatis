@@ -19,3 +19,7 @@ log4j = {
 
 grails.views.default.codec="none" // none, html, base64
 grails.views.gsp.encoding="UTF-8"
+
+grails.doc.authors = 'Franjo Žilić'
+grails.doc.license = 'Apache License 2.0'
+grails.doc.title = 'Grails MyBatis Plugin'

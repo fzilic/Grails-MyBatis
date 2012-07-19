@@ -1,0 +1,38 @@
+h1. Sample class managed by MyBatis gateway with all configuration options
+
+{note}
+You can omit any option and plugin will assume defaults.
+{note}
+
+{code}
+package org.grails.mybatis.example
+class Person {
+  /**
+   * This bean will be intercepted and checked for optimistic locking
+   * Default: false
+   */
+  def static useOptimisticLocking = true
+
+  /**
+   * Identity property of this class
+   * Default: 'id'
+   */
+  def static idProperty = 'id'
+
+  /**
+   * Version property of this class
+   * Default: 'version'
+   */
+  def static versionProperty = 'version'
+
+  /**
+   * Query used to find current version for objects of this class
+   * Default version query for class 'Person' is 'loadCurrentVersionOfPersonById'
+   */
+  dev static versionQuery = 'loadCurrentVersionOfPersonById'
+
+  Integer id
+  Integer version
+  String value
+}
+{code}

@@ -1,0 +1,45 @@
+h1. TypeHandler artefact class sample.
+
+{code}
+package org.grails.mybatis.example
+
+import java.sql.CallableStatement
+import java.sql.PreparedStatement
+import java.sql.ResultSet
+import java.sql.SQLException
+
+import org.apache.ibatis.type.BaseTypeHandler
+import org.apache.ibatis.type.JdbcType
+import org.apache.ibatis.type.MappedJdbcTypes
+import org.apache.ibatis.type.MappedTypes
+
+@MappedJdbcTypes(JdbcType.VARCHAR)
+@MappedTypes([List])
+class ExampleTypeHandler extends BaseTypeHandler<List<String>> {
+  /**
+   * TypeHandler datasource
+   * Default: 'dataSource'
+   */
+  def static dataSourceName = 'dataSource'
+
+  @Override
+  public void setNonNullParameter(PreparedStatement statement, int index, List<String> parameter, JdbcType jdbcType) throws SQLException {
+    // implement
+  }
+
+  @Override
+  public List<String> getNullableResult(ResultSet resultSet, String columnName) throws SQLException {
+    // implement
+  }
+
+  @Override
+  public List<String> getNullableResult(ResultSet resultSet, int columnIndex) {
+    // implement
+  }
+
+  @Override
+  public List<String> getNullableResult(CallableStatement statement, int columnIndex) throws SQLException {
+    // implement
+  }
+}
+{code}

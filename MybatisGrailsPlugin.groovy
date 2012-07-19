@@ -22,15 +22,11 @@ class MybatisGrailsPlugin {
   def author = "Franjo Žilić"
   def authorEmail = "fzilic@croz.net"
   def description = '''\
-Upgrade to an original plugin.
-
-Dropped compatibility for Grails older then 2.0.3
-
-Included support for multiple datasources, and mapping specific gateways to a datasource.
+The MyBatis plugin enables Grails integration with MyBatis ORM framework
 '''
 
   // URL to the plugin's documentation
-  def documentation = "http://grails.org/plugin/mybatis"
+  def documentation = "http://fzilic.github.com/Grails-MyBatis/"
 
   // Extra (optional) plugin metadata
 

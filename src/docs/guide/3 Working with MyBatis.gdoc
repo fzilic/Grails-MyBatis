@@ -1,0 +1,148 @@
+h1. Basic object mapping and support files
+
+When working with MyBatis plugin your "Domain" classes should be located in src/groovy and not in grails-app/domain. This is necessary to avoid conflict with GROM since MyBatis plugin can coexist with existing GORM Domain classes.
+
+To start, create a simple class called Person in package org.grails.mybatis.example
+
+{code}
+package org.grails.mybatis.example
+
+class Person {
+  String firstName
+  String lastName
+  Integer age
+}
+{code}
+
+We need to create a placeholder artefact class for our integration with MyBatis, so create a class SampleGateway in src/gateways/org/grails/mybatis/example.
+
+{note}
+SampleGateway is an artefact class, and each MyBatis gateway should end with "Gateway" for artefact resolution.
+{note}
+
+{code}
+package org.grails.mybatis.example
+
+class PersonGateway {
+
+}
+{code}
+
+MyBatis mapper XML should be created in same directory as Gateway class.
+
+{note}
+Plugin is CamelCase sensitive. CamelCase Gateways should have their mapper files named using - notation.
+CamelCaseGateway.groovy will have camel-case.xml mapper file matched to it.
+{note}
+
+MyBatis mapper files are standard and you should consult [MyBatis documentation|http://www.mybatis.org/core/] for more details.
+
+{note}
+If a select query id ends with "List" it will be treated as an MyBatis ListOp and it is expected to return a list of results.
+If you omit "List" from the end of select id then that select query should return just one result. This behavior can be overridden using "forceAsListOps" static field in matching Gateway artefact.
+{note}
+
+{code:xml}
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.grails.mybatis.example.person">
+
+</mapper>
+{code}
+
+For testing purposes create a Integration test SampleGatewayTests in test/integration.
+
+{note}
+MyBatis plugin interacts with real databases so all tests for database operation should be integration tests.
+{note}
+
+{code}
+package org.grails.mybatis.example
+import groovy.sql.Sql
+
+class PersonGatewayTests extends GroovyTestCase {
+
+  /**
+   * Dependency injection is used to test Gateway artefacts
+   */
+  def dataSource
+  def personGateway
+
+  protected void setUp() throws Exception {
+    def sql = new Sql(dataSource)
+    sql.execute("""CREATE TABLE PERSON (
+    FIRST_NAME VARCHAR(30),
+    LAST_NAME VARCHAR(30),
+    AGE INTEGER
+    )""")
+    sql.execute("""INSERT INTO PERSON (FIRST_NAME, LAST_NAME, AGE) VALUES ('John', 'Doe', 20)""")
+    sql.execute("""INSERT INTO PERSON (FIRST_NAME, LAST_NAME, AGE) VALUES ('Mark', 'Miles', 23)""")
+  }
+
+  protected void tearDown() throws Exception {
+    def sql = new Sql(dataSource)
+    sql.execute("""DROP TABLE IF EXISTS PERSON""")
+  }
+
+  void testDependencies() {
+    assert dataSource
+    assert personGateway
+  }
+
+  void testLoadAllPersonList() {
+    def results = personGateway.loadAllPersonList()
+
+    assert results
+    assert results.size() == 2
+    assert results[0] instanceof Person
+    assert results[0].firstName == 'John'
+    assert results[1].firstName == 'Mark'
+  }
+
+  void testLoadPersonByName() {
+    def result = personGateway.loadPersonByName('John')
+
+    assert result
+    assert result instanceof Person
+    assert result.lastName == 'Doe'
+    assert result.age == 20
+
+    result = personGateway.loadPersonByName('Mark')
+
+    assert result
+    assert result instanceof Person
+    assert result.lastName == 'Miles'
+    assert result.age == 23
+
+    result = personGateway.loadPersonByName('something')
+
+    assert !result
+  }
+}
+{code}
+
+In order to support our tests add following MyBatis queries and mappings to sample.xml mapper
+
+{code:xml}
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="org.grails.mybatis.example.person">
+
+  <select id="loadAllPersonList" resultMap="basicPersonMap">
+    SELECT * FROM PERSON
+  </select>
+
+  <select id="loadPersonByName" resultMap="basicPersonMap">
+    SELECT * FROM PERSON WHERE FIRST_NAME = #{value}
+  </select>
+
+  <resultMap type="org.grails.mybatis.example.Person" id="basicPersonMap">
+    <result property="firstName" column="FIRST_NAME" />
+    <result property="lastName" column="LAST_NAME"/>
+    <result property="age" column="AGE"/>
+  </resultMap>
+
+</mapper>
+{code}
+
+Working with insert, update and delete queries is similar to select queries and you should consult MyBatis documentation for more information.
