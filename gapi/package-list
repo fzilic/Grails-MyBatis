@@ -1,0 +1,5 @@
+DefaultPackage
+org.grails.plugins.mybatis
+org.grails.plugins.mybatis.enums
+org.grails.plugins.mybatis.locking
+org.grails.plugins.mybatis.test

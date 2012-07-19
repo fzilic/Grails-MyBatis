@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>Grails MyBatis Plugin 0.0.1</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass(el) {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/1%20Introduciton%20to%20Grails%20MyBatis%20Plugin.html"><strong>1</strong><span>Introduciton to Grails MyBatis Plugin</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/2%20Getting%20started.html"><strong>2</strong><span>Getting started</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/3%20Working%20with%20MyBatis.html"><strong>3</strong><span>Working with MyBatis</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/4%20Optimistic%20locking.html"><strong>4</strong><span>Optimistic locking</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/5%20Multivendor%20database%20support.html"><strong>5</strong><span>Multivendor database support</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/6%20Custom%20TypeHandlers.html"><strong>6</strong><span>Custom TypeHandlers</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>The MyBatis plugin enables Grails integration with MyBatis ORM framework
+</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="reference corner-all">
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                <h1>Gateway artefact class sample with all possible config options.</h1><p class="paragraph"/><blockquote class="note">
+You can omit any option and plugin will assume defaults.
+</blockquote><p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">package</span> org.grails.mybatis.example
+class SampleGateway &#123;
+  /&#42;&#42;
+   &#42; dataSource where to execute queries from <span class="java&#45;keyword">this</span> gateway
+   &#42; Default: 'dataSource'
+   &#42;/
+  def <span class="java&#45;keyword">static</span> dataSourceName = 'dataSource'<p class="paragraph"/>  /&#42;&#42;
+   &#42; Force queries to behave as list selects instead of single result selects.
+   &#42; By convention any query that ends with 'List' will be handled <span class="java&#45;keyword">this</span> way.
+   &#42; Default: &#91;&#93;
+   &#42;/
+  def <span class="java&#45;keyword">static</span> forceAsListOps = &#91;'selectSomething'&#93;<p class="paragraph"/>&#125;</pre></div>
+
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block">
+                        <h1 class="menu-title" onclick="toggleRef(nextElement(this))">Samples</h1>
+                        <div class="menu-sub selected">
+                            
+                            
+                            <div class="menu-item"><a href="../../ref/Samples/Gateway.html">Gateway</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Samples/Mapper%20XML.html">Mapper XML</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Samples/MyBatisDomainClass.html">MyBatisDomainClass</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Samples/TypeHandlers.html">TypeHandlers</a>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+
+<script type="text/javascript" src="../../js/docs.js"></script>
+
+</body>
+</html>

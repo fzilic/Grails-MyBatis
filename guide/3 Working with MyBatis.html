@@ -1,0 +1,208 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>3 Working with MyBatis 0.0.1</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/1%20Introduciton%20to%20Grails%20MyBatis%20Plugin.html"><strong>1</strong><span>Introduciton to Grails MyBatis Plugin</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/2%20Getting%20started.html"><strong>2</strong><span>Getting started</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/3%20Working%20with%20MyBatis.html"><strong>3</strong><span>Working with MyBatis</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/4%20Optimistic%20locking.html"><strong>4</strong><span>Optimistic locking</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/5%20Multivendor%20database%20support.html"><strong>5</strong><span>Multivendor database support</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/6%20Custom%20TypeHandlers.html"><strong>6</strong><span>Custom TypeHandlers</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>The MyBatis plugin enables Grails integration with MyBatis ORM framework
+</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/2%20Getting%20started.html">&lt;&lt; <strong>2</strong><span>Getting started</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/4%20Optimistic%20locking.html"><strong>4</strong><span>Optimistic locking</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>3 Working with MyBatis - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Franjo Žilić</p>
+
+                    <p><strong>Version:</strong> 0.0.1</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h1 id="3 Working with MyBatis">3 Working with MyBatis</h1>
+<h1>Basic object mapping and support files</h1><p class="paragraph"/>When working with MyBatis plugin your "Domain" classes should be located in src/groovy and not in grails-app/domain. This is necessary to avoid conflict with GROM since MyBatis plugin can coexist with existing GORM Domain classes.<p class="paragraph"/>To start, create a simple class called Person in package org.grails.mybatis.example<p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">package</span> org.grails.mybatis.example<p class="paragraph"/>class Person &#123;
+  <span class="java&#45;object">String</span> firstName
+  <span class="java&#45;object">String</span> lastName
+  <span class="java&#45;object">Integer</span> age
+&#125;</pre></div><p class="paragraph"/>We need to create a placeholder artefact class for our integration with MyBatis, so create a class SampleGateway in src/gateways/org/grails/mybatis/example.<p class="paragraph"/><blockquote class="note">
+SampleGateway is an artefact class, and each MyBatis gateway should end with "Gateway" for artefact resolution.
+</blockquote><p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">package</span> org.grails.mybatis.example<p class="paragraph"/>class PersonGateway &#123;<p class="paragraph"/>&#125;</pre></div><p class="paragraph"/>MyBatis mapper XML should be created in same directory as Gateway class.<p class="paragraph"/><blockquote class="note">
+Plugin is CamelCase sensitive. CamelCase Gateways should have their mapper files named using - notation.
+CamelCaseGateway.groovy will have camel-case.xml mapper file matched to it.
+</blockquote><p class="paragraph"/>MyBatis mapper files are standard and you should consult <a href="http://www.mybatis.org/core/" target="blank">MyBatis documentation</a> for more details.<p class="paragraph"/><blockquote class="note">
+If a select query id ends with "List" it will be treated as an MyBatis ListOp and it is expected to return a list of results.
+If you omit "List" from the end of select id then that select query should return just one result. This behavior can be overridden using "forceAsListOps" static field in matching Gateway artefact.
+</blockquote><p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;?xml version=<span class="xml&#45;quote">"1.0"</span> encoding=<span class="xml&#45;quote">"UTF&#45;8"</span> ?&#62;</span>
+&#60;!DOCTYPE mapper PUBLIC <span class="xml&#45;quote">"&#45;//mybatis.org//DTD Mapper 3.0//EN"</span> <span class="xml&#45;quote">"http://mybatis.org/dtd/mybatis&#45;3&#45;mapper.dtd"</span>&#62;
+<span class="xml&#45;tag">&#60;mapper namespace=<span class="xml&#45;quote">"org.grails.mybatis.example.person"</span>&#62;</span><p class="paragraph"/><span class="xml&#45;tag">&#60;/mapper&#62;</span></pre></div><p class="paragraph"/>For testing purposes create a Integration test SampleGatewayTests in test/integration.<p class="paragraph"/><blockquote class="note">
+MyBatis plugin interacts with real databases so all tests for database operation should be integration tests.
+</blockquote><p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">package</span> org.grails.mybatis.example
+<span class="java&#45;keyword">import</span> groovy.sql.Sql<p class="paragraph"/>class PersonGatewayTests <span class="java&#45;keyword">extends</span> GroovyTestCase &#123;<p class="paragraph"/>  /&#42;&#42;
+   &#42; Dependency injection is used to test Gateway artefacts
+   &#42;/
+  def dataSource
+  def personGateway<p class="paragraph"/>  <span class="java&#45;keyword">protected</span> void setUp() <span class="java&#45;keyword">throws</span> Exception &#123;
+    def sql = <span class="java&#45;keyword">new</span> Sql(dataSource)
+    sql.execute(<span class="java&#45;quote">""</span><span class="java&#45;quote">"CREATE TABLE PERSON (
+    FIRST_NAME VARCHAR(30),
+    LAST_NAME VARCHAR(30),
+    AGE INTEGER
+    )"</span><span class="java&#45;quote">""</span>)
+    sql.execute(<span class="java&#45;quote">""</span><span class="java&#45;quote">"INSERT INTO PERSON (FIRST_NAME, LAST_NAME, AGE) VALUES ('John', 'Doe', 20)"</span><span class="java&#45;quote">""</span>)
+    sql.execute(<span class="java&#45;quote">""</span><span class="java&#45;quote">"INSERT INTO PERSON (FIRST_NAME, LAST_NAME, AGE) VALUES ('Mark', 'Miles', 23)"</span><span class="java&#45;quote">""</span>)
+  &#125;<p class="paragraph"/>  <span class="java&#45;keyword">protected</span> void tearDown() <span class="java&#45;keyword">throws</span> Exception &#123;
+    def sql = <span class="java&#45;keyword">new</span> Sql(dataSource)
+    sql.execute(<span class="java&#45;quote">""</span><span class="java&#45;quote">"DROP TABLE IF EXISTS PERSON"</span><span class="java&#45;quote">""</span>)
+  &#125;<p class="paragraph"/>  void testDependencies() &#123;
+    assert dataSource
+    assert personGateway
+  &#125;<p class="paragraph"/>  void testLoadAllPersonList() &#123;
+    def results = personGateway.loadAllPersonList()<p class="paragraph"/>    assert results
+    assert results.size() == 2
+    assert results&#91;0&#93; <span class="java&#45;keyword">instanceof</span> Person
+    assert results&#91;0&#93;.firstName == 'John'
+    assert results&#91;1&#93;.firstName == 'Mark'
+  &#125;<p class="paragraph"/>  void testLoadPersonByName() &#123;
+    def result = personGateway.loadPersonByName('John')<p class="paragraph"/>    assert result
+    assert result <span class="java&#45;keyword">instanceof</span> Person
+    assert result.lastName == 'Doe'
+    assert result.age == 20<p class="paragraph"/>    result = personGateway.loadPersonByName('Mark')<p class="paragraph"/>    assert result
+    assert result <span class="java&#45;keyword">instanceof</span> Person
+    assert result.lastName == 'Miles'
+    assert result.age == 23<p class="paragraph"/>    result = personGateway.loadPersonByName('something')<p class="paragraph"/>    assert !result
+  &#125;
+&#125;</pre></div><p class="paragraph"/>In order to support our tests add following MyBatis queries and mappings to sample.xml mapper<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;?xml version=<span class="xml&#45;quote">"1.0"</span> encoding=<span class="xml&#45;quote">"UTF&#45;8"</span> ?&#62;</span>
+&#60;!DOCTYPE mapper PUBLIC <span class="xml&#45;quote">"&#45;//mybatis.org//DTD Mapper 3.0//EN"</span> <span class="xml&#45;quote">"http://mybatis.org/dtd/mybatis&#45;3&#45;mapper.dtd"</span>&#62;
+<span class="xml&#45;tag">&#60;mapper namespace=<span class="xml&#45;quote">"org.grails.mybatis.example.person"</span>&#62;</span><p class="paragraph"/>  <span class="xml&#45;tag">&#60;select id=<span class="xml&#45;quote">"loadAllPersonList"</span> resultMap=<span class="xml&#45;quote">"basicPersonMap"</span>&#62;</span>
+    SELECT &#42; FROM PERSON
+  <span class="xml&#45;tag">&#60;/select&#62;</span><p class="paragraph"/>  <span class="xml&#45;tag">&#60;select id=<span class="xml&#45;quote">"loadPersonByName"</span> resultMap=<span class="xml&#45;quote">"basicPersonMap"</span>&#62;</span>
+    SELECT &#42; FROM PERSON WHERE FIRST_NAME = &#35;&#123;value&#125;
+  <span class="xml&#45;tag">&#60;/select&#62;</span><p class="paragraph"/>  <span class="xml&#45;tag">&#60;resultMap type=<span class="xml&#45;quote">"org.grails.mybatis.example.Person"</span> id=<span class="xml&#45;quote">"basicPersonMap"</span>&#62;</span>
+    <span class="xml&#45;tag">&#60;result property=<span class="xml&#45;quote">"firstName"</span> column=<span class="xml&#45;quote">"FIRST_NAME"</span> /&#62;</span>
+    <span class="xml&#45;tag">&#60;result property=<span class="xml&#45;quote">"lastName"</span> column=<span class="xml&#45;quote">"LAST_NAME"</span>/&#62;</span>
+    <span class="xml&#45;tag">&#60;result property=<span class="xml&#45;quote">"age"</span> column=<span class="xml&#45;quote">"AGE"</span>/&#62;</span>
+  <span class="xml&#45;tag">&#60;/resultMap&#62;</span><p class="paragraph"/><span class="xml&#45;tag">&#60;/mapper&#62;</span></pre></div><p class="paragraph"/>Working with insert, update and delete queries is similar to select queries and you should consult MyBatis documentation for more information.
+
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/2%20Getting%20started.html">&lt;&lt; <strong>2</strong><span>Getting started</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/4%20Optimistic%20locking.html"><strong>4</strong><span>Optimistic locking</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Samples</h1><div class="menu-sub">
+                        
+                            
+                            <div class="menu-item"><a href="../ref/Samples/Gateway.html">Gateway</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Samples/Mapper%20XML.html">Mapper XML</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Samples/MyBatisDomainClass.html">MyBatisDomainClass</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Samples/TypeHandlers.html">TypeHandlers</a>
+                            </div>
+                            
+                            </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>
