@@ -12,3 +12,6 @@ Modifications:
  - Minimum Grails dependency 2.0.3
  - Added support for optional optimistic locking - based on MyBatis Optimist plugin (http://code.google.com/p/optimist/) while avoiding Java annotations (convention over configuration)
  - Added support for custom Enum persistance (based on enum property value - to make DBA-s happy)
+
+Documenation: http://fzilic.github.com/Grails-MyBatis/
+ - documentation review needed
