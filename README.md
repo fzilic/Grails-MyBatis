@@ -5,6 +5,8 @@ MyBatis plugin for Grails framework
 
 Based on original Grails-iBatis plugin by: Brian Sanders (http://grails.org/plugin/ibatis)
 
+Grails plugin home: http://grails.org/plugin/mybatis
+
 Modifications:
  - Some changes in name conventions
  - Added full support for multiple datasources
