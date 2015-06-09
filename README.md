@@ -16,4 +16,5 @@ Modifications:
  - Added support for custom Enum persistance (based on enum property value - to make DBA-s happy)
 
 Documenation: http://fzilic.github.com/Grails-MyBatis/
- - documentation review needed
+- documentation review needed
+- Also check the notes of arief-hidayat http://www.ariefhidayat.com/grails-mybatis/
