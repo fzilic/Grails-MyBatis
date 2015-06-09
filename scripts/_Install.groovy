@@ -10,3 +10,5 @@
 //
 ant.mkdir(dir:"${basedir}/grails-app/gateways")
 ant.mkdir(dir:"${basedir}/grails-app/typeHandlers")
+
+//ant.copy(file:"${pluginBasedir}/scripts/_Events.groovy", todir:"${basedir}/scripts")
