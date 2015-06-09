@@ -129,7 +129,7 @@ class MappingSupport {
       return null
     }
 
-    XmlSlurper xmlSlurper = new XmlSlurper(validating, true)
+    XmlSlurper xmlSlurper = new XmlSlurper(validating, true, true)
     xmlSlurper.entityResolver = resolver as EntityResolver
 
     return xmlSlurper.parseText(mappingFileText)
