@@ -12,3 +12,4 @@ stacktrace.log
 *.iml
 *.sha1
 *.*~
+out
