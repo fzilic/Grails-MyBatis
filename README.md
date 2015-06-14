@@ -1,6 +1,8 @@
 Grails-MyBatis
 ==============
 
+[![Build Status](https://travis-ci.org/fzilic/Grails-MyBatis.svg?branch=master)](https://travis-ci.org/fzilic/Grails-MyBatis)
+
 MyBatis plugin for Grails framework
 
 Based on original Grails-iBatis plugin by: Brian Sanders (http://grails.org/plugin/ibatis)
