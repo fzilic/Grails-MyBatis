@@ -1,9 +1,8 @@
 package org.grails.plugins.mybatis.mapping
 
 import grails.test.GrailsUnitTestCase
-
-import org.codehaus.groovy.grails.commons.GrailsClass
 import org.codehaus.groovy.grails.commons.DefaultGrailsClass
+import org.codehaus.groovy.grails.commons.GrailsClass
 import org.grails.plugins.mybatis.MappingSupport
 
 class MappingSupportTests extends GrailsUnitTestCase {
@@ -35,7 +34,11 @@ class MappingSupportTests extends GrailsUnitTestCase {
   void testXmlParsing() {
     def file = new File("test/unit/org/grails/plugins/mybatis/mapping/sample.xml")
     assert file.exists()
-    def xml = new XmlSlurper(false, true).parseText(file.text)
+
+    def slurper = new XmlSlurper(false, true)
+    MappingSupport.allowDocTypeDeclaration(slurper)
+    MappingSupport.allowHttpOnJava8OrHigher(slurper)
+    def xml = slurper.parseText(file.text)
     def mappingSupport = new MappingSupport()
     assert mappingSupport.getOperationIds(xml)['select'].size() == 3
     assert mappingSupport.getOperationIds(xml)['insert'].size() == 0

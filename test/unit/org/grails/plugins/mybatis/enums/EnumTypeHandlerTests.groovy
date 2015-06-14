@@ -1,8 +1,8 @@
 package org.grails.plugins.mybatis.enums
 
-import grails.test.mixin.*
+import grails.test.GrailsUnitTestCase
 
-import java.sql.CallableStatement;
+import java.sql.CallableStatement
 import java.sql.PreparedStatement
 import java.sql.ResultSet
 
@@ -11,7 +11,7 @@ enum SampleEnum {
 
   String dbCode
 
-  SampleEnum(dbCode){
+  SampleEnum(dbCode) {
     this.dbCode = dbCode
   }
 }
@@ -22,7 +22,7 @@ class SampleEnumTypeHandler extends AbstractEnumTypeHandler<SampleEnum> {
   }
 }
 
-class EnumTypeHandlerTests {
+class EnumTypeHandlerTests extends GrailsUnitTestCase {
 
   void testGettingValue() {
     def hanlder = new SampleEnumTypeHandler()

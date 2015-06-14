@@ -3,17 +3,30 @@ package org.grails.plugins.mybatis
 import org.apache.commons.logging.LogFactory
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.codehaus.groovy.grails.commons.GrailsClass
+import org.codehaus.groovy.grails.commons.GrailsClassUtils
 import org.springframework.core.io.ClassPathResource
 import org.springframework.core.io.FileSystemResource
 import org.springframework.core.io.Resource
-import org.codehaus.groovy.grails.commons.GrailsClassUtils
-import org.xml.sax.InputSource
 import org.xml.sax.EntityResolver
+import org.xml.sax.InputSource
 
 class MappingSupport {
   def gatewaysPath = 'grails-app/gateways'
 
   private log = LogFactory.getLog(MappingSupport)
+
+  def static allowDocTypeDeclaration(XmlSlurper xmlSlurper) {
+    // three arguments XmlSluper constructor doesn't exist on Grails 2.0.x
+    xmlSlurper.setFeature('http://apache.org/xml/features/disallow-doctype-decl', false)
+  }
+
+  def static allowHttpOnJava8OrHigher(XmlSlurper xmlSlurper) {
+    // workaround for Java 8 and http method restriction on loading external DTDs
+    def javaMajorVersion = (System.getProperty('java.version') =~ /\d\.(\d*)\..*/)[0][1] as Integer
+    if (javaMajorVersion >= 8) {
+      xmlSlurper.setFeature('http://apache.org/xml/features/nonvalidating/load-external-dtd', false)
+    }
+  }
 
   def getArtefactMapperResource(artefact){
     def filename = getMappingFileFileName(artefact.fullName)
@@ -89,6 +102,7 @@ class MappingSupport {
     }
   }
 
+  //List operation is one that ends with "List"
   private String shortenName(String name) {
     if (name.indexOf('Gateway') != -1) {
       name = name.substring(0, name.lastIndexOf('Gateway'))
@@ -96,7 +110,6 @@ class MappingSupport {
     return name
   }
 
-  //List operation is one that ends with "List"
   def isListOp(GrailsClass grailsClass, String operationId) {
     def listOps = GrailsClassUtils.getStaticPropertyValue(grailsClass.clazz, "forceAsListOps")
 
@@ -129,7 +142,9 @@ class MappingSupport {
       return null
     }
 
-    XmlSlurper xmlSlurper = new XmlSlurper(validating, true, true)
+    XmlSlurper xmlSlurper = new XmlSlurper(validating, true)
+    allowDocTypeDeclaration(xmlSlurper)
+    allowHttpOnJava8OrHigher(xmlSlurper)
     xmlSlurper.entityResolver = resolver as EntityResolver
 
     return xmlSlurper.parseText(mappingFileText)

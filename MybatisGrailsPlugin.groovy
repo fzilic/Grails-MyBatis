@@ -9,7 +9,7 @@ import org.grails.plugins.mybatis.TypeHandlerArtefactHandler
 import org.grails.plugins.mybatis.locking.OptimisticLockingInterceptor
 
 class MybatisGrailsPlugin {
-  def version = "0.0.2.2"
+  def version = "0.0.3"
   def grailsVersion = "2.0 > *"
   def dependsOn = [:]
   def pluginExcludes = [
@@ -20,7 +20,7 @@ class MybatisGrailsPlugin {
 
   def title = "Grails Mybatis Plugin"
   def author = "Franjo Žilić"
-  def authorEmail = "fzilic@croz.net"
+  def authorEmail = "frenky666@gmail.com"
   def description = '''\
 The MyBatis plugin enables Grails integration with MyBatis ORM framework
 '''
@@ -34,7 +34,7 @@ The MyBatis plugin enables Grails integration with MyBatis ORM framework
   def license = "APACHE"
 
   // Details of company behind the plugin (if there is one)
-  def organization = [ name: "CROZ d.o.o.", url: "http://www.croz.net/" ]
+  // def organization
 
   // Any additional developers beyond the author specified above.
   def developers = [

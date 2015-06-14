@@ -20,5 +20,6 @@ grails.project.dependency.resolution = {
   }
 
   plugins {
+    build ':release:3.1.1', { export = false }
   }
 }

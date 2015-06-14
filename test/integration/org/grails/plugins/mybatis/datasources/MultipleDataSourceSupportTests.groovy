@@ -3,9 +3,7 @@ package org.grails.plugins.mybatis.datasources
 import org.codehaus.groovy.grails.commons.GrailsApplication
 import org.mybatis.spring.SqlSessionFactoryBean
 
-import grails.test.GrailsUnitTestCase
-
-class MultipleDataSourceSupportTests extends GrailsUnitTestCase {
+class MultipleDataSourceSupportTests extends GroovyTestCase {
   def grailsApplication
 
   @Override
