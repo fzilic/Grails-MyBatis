@@ -1,6 +1,8 @@
 Grails-MyBatis
 ==============
 
+[![Join the chat at https://gitter.im/fzilic/Grails-MyBatis](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/fzilic/Grails-MyBatis?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+
 [![Build Status](https://travis-ci.org/fzilic/Grails-MyBatis.svg?branch=master)](https://travis-ci.org/fzilic/Grails-MyBatis)
 
 MyBatis plugin for Grails framework
