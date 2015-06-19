@@ -1,0 +1,153 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>4.2 Multivendor database dynamic querry support 0.0.3</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/workingWithMyBatis.html"><strong>3</strong><span>Working with MyBatis</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../../guide/pluginFeatures.html"><strong>4</strong><span>Plugin features</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>The MyBatis plugin enables Grails integration with MyBatis ORM framework
+</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../../guide/workingWithMyBatis.html">&lt;&lt; <strong>3</strong><span>Working with MyBatis</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+
+
+                <div class="project">
+                    <h1>4.2 Multivendor database dynamic querry support - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Franjo Žilić</p>
+
+                    <p><strong>Version:</strong> 0.0.3</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h2 id="multivendorSupport">4.2 Multivendor database dynamic querry support</h2>
+<h3>Configuration</h3><p class="paragraph"/>Add following to your configuration if you want to support H2, Microsoft SQL and IBM Informix databases<p class="paragraph"/><div class="code"><pre>mybatis.multivendor.enabled = <span class="java&#45;keyword">true</span><p class="paragraph"/>mybatis.multivendor.mapping = &#91;
+    'Microsoft SQL Server': 'mssql',
+    'H2': 'h2',
+    'Informix Dynamic Server': 'informix'
+&#93;</pre></div><p class="paragraph"/><h3>Mapper support</h3><p class="paragraph"/>Let's say you want to query a databse for persons full name. You have to concat two fields in legacy PERSON table, here is sample mapper to do just that.<p class="paragraph"/><div class="code"><pre><span class="xml&#45;tag">&#60;?xml version=<span class="xml&#45;quote">"1.0"</span> encoding=<span class="xml&#45;quote">"UTF&#45;8"</span> ?&#62;</span>
+&#60;!DOCTYPE mapper PUBLIC <span class="xml&#45;quote">"&#45;//mybatis.org//DTD Mapper 3.0//EN"</span> <span class="xml&#45;quote">"http://mybatis.org/dtd/mybatis&#45;3&#45;mapper.dtd"</span>&#62;
+<span class="xml&#45;tag">&#60;mapper namespace=<span class="xml&#45;quote">"org.grails.mybatis.example.person"</span>&#62;</span><p class="paragraph"/>  <span class="xml&#45;tag">&#60;sql id=<span class="xml&#45;quote">"fullNameDatabaseSpecificQuery"</span>&#62;</span>
+    <span class="xml&#45;tag">&#60;choose&#62;</span>
+      <span class="xml&#45;tag">&#60;when test=<span class="xml&#45;quote">"_databaseId == 'mssql'"</span>&#62;</span>FIRST_NAME + ' ' + LAST_NAME<span class="xml&#45;tag">&#60;/when&#62;</span>
+      <span class="xml&#45;tag">&#60;when test=<span class="xml&#45;quote">"_databaseId == 'informix'"</span>&#62;</span>FIRST_NAME || ' ' || LAST_NAME<span class="xml&#45;tag">&#60;/when&#62;</span>
+      <span class="xml&#45;tag">&#60;otherwise&#62;</span>CONCAT(FIRST_NAME, ' ', LAST_NAME<span class="xml&#45;tag">&#60;/otherwise&#62;</span>
+    <span class="xml&#45;tag">&#60;/choose&#62;</span>
+  <span class="xml&#45;tag">&#60;/sql&#62;</span><p class="paragraph"/>  <span class="xml&#45;tag">&#60;select id=<span class="xml&#45;quote">"loadPersonFullNameById&#62;</span>"</span> resultType=<span class="xml&#45;quote">"String"</span> parameterType=<span class="xml&#45;quote">"Integer"</span>&#62;
+    SELECT <span class="xml&#45;tag">&#60;include refid=<span class="xml&#45;quote">"fullNameDatabaseSpecificQuery"</span>/&#62;</span>
+    FROM PERSON
+    WHERE ID = &#35;&#123;value&#125;
+  <span class="xml&#45;tag">&#60;/select&#62;</span><p class="paragraph"/><span class="xml&#45;tag">&#60;/mapper&#62;</span></pre></div>
+
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../../guide/workingWithMyBatis.html">&lt;&lt; <strong>3</strong><span>Working with MyBatis</span></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Samples</h1><div class="menu-sub">
+                        
+                            
+                            <div class="menu-item"><a href="../../ref/Samples/Gateway.html">Gateway</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Samples/Mapper%20XML.html">Mapper XML</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Samples/MyBatisDomainClass.html">MyBatisDomainClass</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../../ref/Samples/TypeHandlers.html">TypeHandlers</a>
+                            </div>
+                            
+                            </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,159 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+                      "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+<head>
+    <title>2 Getting Started 0.0.3</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <script type="text/javascript">
+function addJsClass() {
+    var classes = document.body.className.split(" ");
+    classes.push("js");
+    document.body.className = classes.join(" ");
+}
+    </script>
+</head>
+
+<body class="body" onload="addJsClass();">
+<div id="navigation">
+    <ul>
+        <li>
+            <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
+                <a href="../guide/index.html" class="button">Table of contents</a>
+
+                <div id="nav-summary-childs" style="display:none;">
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/workingWithMyBatis.html"><strong>3</strong><span>Working with MyBatis</span></a>
+                    </div>
+                    
+                    <div class="toc-item" style="margin-left:0"><a href="../guide/pluginFeatures.html"><strong>4</strong><span>Plugin features</span></a>
+                    </div>
+                    
+                </div>
+            </div>
+        </li>
+        <li class="separator selected">
+            <a id="ref-button" onclick="localToggle(); return false;" href="#">Quick Reference</a>
+        </li>
+    </ul>
+</div>
+<div id="header">
+    <div class="images clearfix">
+        
+        
+    </div>
+    <p>The MyBatis plugin enables Grails integration with MyBatis ORM framework
+</p>
+</div>
+
+
+<table id="colset" border="0" cellpadding="0" cellspacing="0">
+    <tr>
+        <td id="col1">
+            <div id="main" class="corner-all">
+
+                
+                    <div class="toc-item prev-left"><a href="../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+
+                <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
+
+                
+                    <div class="toc-item next-right"><a href="../guide/workingWithMyBatis.html"><strong>3</strong><span>Working with MyBatis</span> >></a></div>
+                
+
+
+                <div class="project">
+                    <h1>2 Getting Started - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Franjo Žilić</p>
+
+                    <p><strong>Version:</strong> 0.0.3</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h1 id="gettingStarted">2 Getting Started</h1>
+<h1>Installation</h1>
+Add plugin dependency to BuildConfig.groovy
+<div class="code"><pre>compile &#34;:mybatis:0.0.3&#34;</pre></div><p class="paragraph"/><h1>UnInstall</h1>
+Remove plugin dependency from BuildConfig.groovy and remove directories grails-app/gateways and grails-app/typeHandlers<p class="paragraph"/><h2>Workspace configuration</h2>
+If you are using SpringSource Tool Suite or IntelliJ Idea as your IDE you should add grails-app/gateways and grails-app/typeHandlers to your source path for class resolution.<p class="paragraph"/><h1>Configuration</h1>
+None of configuration options is required for starting application with this plugin, but you should modify them to suite your own application
+<table class="wiki-table" cellpadding="0" cellspacing="0" border="0"><tr><th>Option</th><th>Description</th></tr><tr class="table-odd"><td>mybatis.dataSourceNames</td><td>List of datasource names used for MyBatis</td></tr><tr class="table-even"><td>mybatis.optimisticLocking</td><td>Enable OptimisticLockingInterceptor globally</td></tr><tr class="table-odd"><td>mybatis.multivendor.enabled</td><td>Enable support for multiple database engines</td></tr><tr class="table-even"><td>mybatis.multivendor.mapping</td><td>Map multiple database engines to specific MyBatis database ids</td></tr></table><p class="paragraph"/><h2>DataSource configuration</h2>
+To support multiple datasources you have to configure which ones are going to be used by MyBatis plugin.<p class="paragraph"/>By default plugin uses only default datasource and each gateway artefact is registered to default datasource. If you wish to use more then one datasource add their names to this list.<p class="paragraph"/><div class="code"><pre>mybatis.dataSourceNames = &#91;'dataSource'&#93;</pre></div><p class="paragraph"/><h2>Optimistic locking configuration</h2>
+Optimistic locking is enabled by default on all datasources but no object will be versioned unless they are configured with a static field. To change optimistic locking functionality add this to your configuration.<p class="paragraph"/><div class="code"><pre>mybatis.optimisticLocking = <span class="java&#45;keyword">false</span></pre></div><p class="paragraph"/><h2>Multivendor database support</h2>
+If you wish to support more then one database vendor you have to enable support in plugin configuration and map different database names to a specific databaseId key. For more information about multivendor support in MyBatis consult <a href="http://www.mybatis.org/core/configuration.html#databaseIdProvider" target="blank">MyBatis documentation</a>. Sample configuration and use is provided in this documentation.<p class="paragraph"/><div class="code"><pre>mybatis.multivendor.enabled = <span class="java&#45;keyword">true</span></pre></div><p class="paragraph"/><blockquote class="note">
+If you choose to implement multivendor support you have to map database names to distinct ids. This is a sample configuration which provides mapping for couple of database names
+<div class="code"><pre>mybatis.multivendor.mapping = &#91;
+    'Microsoft SQL Server': 'mssql',
+    'H2': 'h2',
+    'Informix Dynamic Server': 'informix',
+    'DB2/LINUXX8664': 'db2',
+    'DB2/400 SQL': 'db2'
+&#93;</pre></div>
+</blockquote>
+
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item prev-left"><a href="../guide/introduction.html">&lt;&lt; <strong>1</strong><span>Introduction</span></a></div>
+                
+                    <div class="toc-item next-right"><a href="../guide/workingWithMyBatis.html"><strong>3</strong><span>Working with MyBatis</span> >></a></div>
+                
+                <div style="clear:both"></div>
+            </div>
+        </td>
+        <td id="col2">
+            <div class="local clearfix">
+                <div class="local-title">
+                    <a href="../guide/index.html" target="mainFrame">Quick Reference</a>
+                    <span class="toggle">(<a href="#" onclick="localToggle(); return false;">hide</a>)</span>
+                </div>
+                <div class="menu">
+                    
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Samples</h1><div class="menu-sub">
+                        
+                            
+                            <div class="menu-item"><a href="../ref/Samples/Gateway.html">Gateway</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Samples/Mapper%20XML.html">Mapper XML</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Samples/MyBatisDomainClass.html">MyBatisDomainClass</a>
+                            </div>
+                            
+                            <div class="menu-item"><a href="../ref/Samples/TypeHandlers.html">TypeHandlers</a>
+                            </div>
+                            
+                            </div>
+                    </div>
+                    
+                </div>
+            </div>
+        </td>
+    </tr>
+</table>
+
+<div id="footer">
+    
+    
+</div>
+
+<script type="text/javascript" src="../js/docs.js"></script>
+
+</body>
+</html>

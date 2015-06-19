@@ -2,12 +2,12 @@
                       "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
 <head>
-    <title>Grails MyBatis Plugin 0.0.3</title>
+    <title>1.1 Change Log 0.0.3</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-    <link rel="stylesheet" href="../../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
-    <link rel="stylesheet" href="../../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/main.css" type="text/css" media="screen, print" title="Style" charset="utf-8"/>
+    <link rel="stylesheet" href="../css/pdf.css" type="text/css" media="print" title="PDF" charset="utf-8"/>
     <script type="text/javascript">
-function addJsClass(el) {
+function addJsClass() {
     var classes = document.body.className.split(" ");
     classes.push("js");
     document.body.className = classes.join(" ");
@@ -16,14 +16,13 @@ function addJsClass(el) {
 </head>
 
 <body class="body" onload="addJsClass();">
-
 <div id="navigation">
     <ul>
         <li>
             <div id="nav-summary" onmouseover="toggleNavSummary(false)" onmouseout="toggleNavSummary(true)">
                 <a href="../../guide/index.html" class="button">Table of contents</a>
 
-                <div id="nav-summary-childs">
+                <div id="nav-summary-childs" style="display:none;">
                     
                     <div class="toc-item" style="margin-left:0"><a href="../../guide/introduction.html"><strong>1</strong><span>Introduction</span></a>
                     </div>
@@ -58,38 +57,54 @@ function addJsClass(el) {
 <table id="colset" border="0" cellpadding="0" cellspacing="0">
     <tr>
         <td id="col1">
-            <div id="main" class="reference corner-all">
+            <div id="main" class="corner-all">
+
+                
 
                 <span id='toggle-col1' class="toggle">(<a href="#" onclick="localToggle(); return false;">Quick Reference</a>)</span>
 
-                <h1>TypeHandler artefact class sample.</h1><p class="paragraph"/><div class="code"><pre><span class="java&#45;keyword">package</span> org.grails.mybatis.example<p class="paragraph"/><span class="java&#45;keyword">import</span> java.sql.CallableStatement
-<span class="java&#45;keyword">import</span> java.sql.PreparedStatement
-<span class="java&#45;keyword">import</span> java.sql.ResultSet
-<span class="java&#45;keyword">import</span> java.sql.SQLException<p class="paragraph"/><span class="java&#45;keyword">import</span> org.apache.ibatis.type.BaseTypeHandler
-<span class="java&#45;keyword">import</span> org.apache.ibatis.type.JdbcType
-<span class="java&#45;keyword">import</span> org.apache.ibatis.type.MappedJdbcTypes
-<span class="java&#45;keyword">import</span> org.apache.ibatis.type.MappedTypes<p class="paragraph"/>@MappedJdbcTypes(JdbcType.VARCHAR)
-@MappedTypes(&#91;List&#93;)
-class ExampleTypeHandler <span class="java&#45;keyword">extends</span> BaseTypeHandler&#60;List&#60;<span class="java&#45;object">String</span>&#62;&#62; &#123;
-  /&#42;&#42;
-   &#42; TypeHandler datasource
-   &#42; Default: 'dataSource'
-   &#42;/
-  def <span class="java&#45;keyword">static</span> dataSourceName = 'dataSource'<p class="paragraph"/>  @Override
-  <span class="java&#45;keyword">public</span> void setNonNullParameter(PreparedStatement statement, <span class="java&#45;object">int</span> index, List&#60;<span class="java&#45;object">String</span>&#62; parameter, JdbcType jdbcType) <span class="java&#45;keyword">throws</span> SQLException &#123;
-    // implement
-  &#125;<p class="paragraph"/>  @Override
-  <span class="java&#45;keyword">public</span> List&#60;<span class="java&#45;object">String</span>&#62; getNullableResult(ResultSet resultSet, <span class="java&#45;object">String</span> columnName) <span class="java&#45;keyword">throws</span> SQLException &#123;
-    // implement
-  &#125;<p class="paragraph"/>  @Override
-  <span class="java&#45;keyword">public</span> List&#60;<span class="java&#45;object">String</span>&#62; getNullableResult(ResultSet resultSet, <span class="java&#45;object">int</span> columnIndex) &#123;
-    // implement
-  &#125;<p class="paragraph"/>  @Override
-  <span class="java&#45;keyword">public</span> List&#60;<span class="java&#45;object">String</span>&#62; getNullableResult(CallableStatement statement, <span class="java&#45;object">int</span> columnIndex) <span class="java&#45;keyword">throws</span> SQLException &#123;
-    // implement
-  &#125;
-&#125;</pre></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span> >></a></div>
+                
 
+
+                <div class="project">
+                    <h1>1.1 Change Log - Reference Documentation</h1>
+
+                    <p><strong>Authors:</strong> Franjo Žilić</p>
+
+                    <p><strong>Version:</strong> 0.0.3</p>
+
+                    
+                </div>
+
+                
+
+                
+
+<h2 id="changeLog">1.1 Change Log</h2>
+<h3>Updates in version 0.0.3</h3>
+<ul class="star">
+<li>Fixed several issues reported on GitHub</li>
+<ul class="star">
+<li>GH-8 XML files not in WAR</li>
+<ul class="star">
+<li>plugin was did not copy MyBatis XML mapper files to WAR</li>
+</ul>
+<li>GH-7 load error occur - http://apache.org/xml/features/disallow-doctype-decl" set to true</li>
+<ul class="star">
+<li>XmlSlurper configuration for Java 7 and 8</li>
+</ul>
+<li>Minor code cleanup</li>
+<li>Support for Grails version from 2.0.3 up to 2.3.11 (tested), other 2.x versions should work</li>
+</ul></ul><p class="paragraph"/>
+
+
+                <div style="clear:both;margin-top:15px;"></div>
+                
+                    <div class="toc-item next-right"><a href="../../guide/gettingStarted.html"><strong>2</strong><span>Getting Started</span> >></a></div>
+                
+                <div style="clear:both"></div>
             </div>
         </td>
         <td id="col2">
@@ -100,10 +115,8 @@ class ExampleTypeHandler <span class="java&#45;keyword">extends</span> BaseTypeH
                 </div>
                 <div class="menu">
                     
-                    <div class="menu-block">
-                        <h1 class="menu-title" onclick="toggleRef(nextElement(this))">Samples</h1>
-                        <div class="menu-sub selected">
-                            
+                    <div class="menu-block"><h1 class="menu-title" onclick="toggleRef(this.parentNode.childNodes[1])">Samples</h1><div class="menu-sub">
+                        
                             
                             <div class="menu-item"><a href="../../ref/Samples/Gateway.html">Gateway</a>
                             </div>
@@ -117,7 +130,7 @@ class ExampleTypeHandler <span class="java&#45;keyword">extends</span> BaseTypeH
                             <div class="menu-item"><a href="../../ref/Samples/TypeHandlers.html">TypeHandlers</a>
                             </div>
                             
-                        </div>
+                            </div>
                     </div>
                     
                 </div>
@@ -131,8 +144,7 @@ class ExampleTypeHandler <span class="java&#45;keyword">extends</span> BaseTypeH
     
 </div>
 
-
-<script type="text/javascript" src="../../js/docs.js"></script>
+<script type="text/javascript" src="../js/docs.js"></script>
 
 </body>
 </html>
