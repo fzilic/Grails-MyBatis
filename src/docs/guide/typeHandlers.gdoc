@@ -1,9 +1,7 @@
-h1. Writing custom MyBatis TypeHandlers
-
-h2. What are TypeHandlers
+h3. What are TypeHandlers
 Type handlers are used for data transformation. For example, you are connecting to a legacy database that stores list of data in a single VARCHAR field, and each item is enclosed with brackets. You have to extract that data, and you can do it with a custom type handler.
 
-h2. Writing a TypeHandler
+h3. Writing a TypeHandler
 TypeHandlers are artefact classes which should be placed in grails-app/typeHandlers and end with "TypeHandler"
 
 {code}
@@ -68,7 +66,7 @@ class ExampleTypeHandler extends BaseTypeHandler<List<String>>{
 
 You have to register that type handler to a specific MyBatis result using typeHanlder attribute in mapper file.
 
-h2. Custom Enum type handlers
+h3. Custom Enum type handlers
 From time to time old databases store some enumerated information in a specific way (single character). If you need to map such values to your enums it can be done by extending AbstractEnumTypeHandler class provided in this plugin
 
 {code}

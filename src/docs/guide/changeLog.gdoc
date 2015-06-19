@@ -1,0 +1,8 @@
+h3. Updates in version 0.0.3
+* Fixed several issues reported on GitHub
+** GH-8 XML files not in WAR
+*** plugin was did not copy MyBatis XML mapper files to WAR
+** GH-7 load error occur - http://apache.org/xml/features/disallow-doctype-decl" set to true
+*** XmlSlurper configuration for Java 7 and 8
+** Minor code cleanup
+** Support for Grails version from 2.0.3 up to 2.3.11 (tested), other 2.x versions should work

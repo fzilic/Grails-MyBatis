@@ -1,6 +1,6 @@
 The MyBatis plugin enables Grails integration with [MyBatis|http://code.google.com/p/mybatis/] ORM framework. Work on this plugin has been inspired by original [iBatis|http://grails.org/plugin/ibatis] plugin written by brian.j.sanders.
 
-While writing this plugin basic working principles have been kept, but most of the code had been rewritten. Migration from original plugin to this one is still not documented and support, although it should be possible.
+While writing this plugin basic working principles have been kept, but most of the code had been rewritten. Migration from original plugin to this one is still not documented and supported, although it should be possible and not complicated.
 
 h1. Changes from original plugin
 * Upgrade to Grails 2.0.3

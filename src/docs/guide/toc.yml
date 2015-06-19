@@ -1,0 +1,16 @@
+introduction:
+  title: Introduction
+  changeLog:
+    title: Change Log
+gettingStarted:
+  title: Getting Started
+workingWithMyBatis:
+  title: Working with MyBatis
+pluginFeatures:
+  title: Plugin features
+  optimisticLocking:
+    title: Optimistic locking
+  multivendorSupport:
+    title: Multivendor database dynamic querry support
+  typeHandlers:
+    title: Custom TypeHandlers

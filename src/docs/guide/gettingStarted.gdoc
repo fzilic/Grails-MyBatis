@@ -1,7 +1,7 @@
 h1. Installation
 Add plugin dependency to BuildConfig.groovy
 {code}
-compile \":mybatis:0.0.1\"
+compile \":mybatis:0.0.3\"
 {code}
 
 h1. UnInstall

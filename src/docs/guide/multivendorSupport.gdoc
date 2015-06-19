@@ -1,6 +1,4 @@
-h1. Support multiple database vendors
-
-h2. Configuration
+h3. Configuration
 
 Add following to your configuration if you want to support H2, Microsoft SQL and IBM Informix databases
 
@@ -14,7 +12,7 @@ mybatis.multivendor.mapping = [
 ]
 {code}
 
-h2. Mapper support
+h3. Mapper support
 
 Let's say you want to query a databse for persons full name. You have to concat two fields in legacy PERSON table, here is sample mapper to do just that.
 

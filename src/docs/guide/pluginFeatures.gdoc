@@ -1,0 +1,6 @@
+MyBatis plugin has extra features which can be used if needed
+
+h1. Features:
+* Optimistic Locking
+* Multivendor database dynamic querry support
+* Custom TypeHandlers
